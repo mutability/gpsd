@@ -568,7 +568,11 @@ int gpsd_serial_open(struct gps_device_t *session)
 #else
 		       gpsd_get_speed_old(session),
 #endif /* FIXED_PORT_SPEED */
+#ifdef FIXED_PARITY
+		       FIXED_PARITY[0],
+#else
 		       gpsd_get_parity(session),
+#endif
 #ifdef FIXED_STOP_BITS
 		       FIXED_STOP_BITS
 #else

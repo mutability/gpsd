@@ -184,6 +184,7 @@ nonboolopts = (
     ("max_devices",         '4',           "maximum allowed devices"),
     ("fixed_port_speed",    0,             "fixed serial port speed"),
     ("fixed_stop_bits",     0,             "fixed serial port stop bits"),
+    ("fixed_parity",        "",            "fixed serial port parity"),
     ("target",              "",            "cross-development target"),
     ("sysroot",             "",            "cross-development system root"),
     )
