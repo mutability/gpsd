@@ -550,13 +550,11 @@ int gpsd_serial_open(struct gps_device_t *session)
 	 * 200 (and possibly other USB GPSes) gets completely hosed
 	 * in the presence of flow control.  Thus, turn off CRTSCTS.
 	 *
-	 * This is not ideal.  Setting no parity here will mean extra
-	 * initialization time for some devices, like certain Trimble
-	 * boards, that want 7O2 or other non-8N1 settings. But starting
-	 * the hunt loop at 8N1 will minimize the average sync time
-	 * over all devices.
+	 * Do not touch the stop bits or parity; they might have been
+	 * explicitly set externally to the correct value, and we
+	 * should not second-guess that.
 	 */
-	session->ttyset.c_cflag &= ~(PARENB | PARODD | CRTSCTS | CSTOPB);
+	session->ttyset.c_cflag &= ~CRTSCTS;
 	session->ttyset.c_cflag |= CREAD | CLOCAL;
 	session->ttyset.c_iflag = session->ttyset.c_oflag =
 	    session->ttyset.c_lflag = (tcflag_t) 0;
@@ -570,11 +568,11 @@ int gpsd_serial_open(struct gps_device_t *session)
 #else
 		       gpsd_get_speed_old(session),
 #endif /* FIXED_PORT_SPEED */
-		       'N',
+		       gpsd_get_parity(session),
 #ifdef FIXED_STOP_BITS
 		       FIXED_STOP_BITS
 #else
-		       1
+		       gpsd_get_stopbits(session)
 #endif /* FIXED_STOP_BITS */
 	    );
     }
