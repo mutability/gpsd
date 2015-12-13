@@ -1126,8 +1126,10 @@ static void tsip_mode(struct gps_device_t *session, int mode)
 #ifdef TIMEHINT_ENABLE
 static double tsip_time_offset(struct gps_device_t *session UNUSED)
 {
-    /* FIX-ME: is a constant offset right here? */
-    return 0.075;
+    /* a value of 0.075 is definitely wrong.
+     * just return zero.
+     */
+    return 0.0;
 }
 #endif /* TIMEHINT_ENABLE */
 
