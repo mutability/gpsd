@@ -494,7 +494,7 @@ static gps_mask_t tsip_parse_input(struct gps_device_t *session)
 		session->gpsdata.skyview[i].azimuth = (short)round(d2);
 		session->gpsdata.skyview[i].used = false;
 		for (j = 0; j < session->gpsdata.satellites_used; j++)
-		    if (session->gpsdata.skyview[i].PRN != 0 && session->driver.tsip.sats_used[j] != 0)
+		    if (session->gpsdata.skyview[i].PRN != 0 && session->driver.tsip.sats_used[j] == session->gpsdata.skyview[i].PRN)
 			session->gpsdata.skyview[i].used = true;
 	    } else {
 		session->gpsdata.skyview[i].PRN =
